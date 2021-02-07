@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 class MazeEnvironment(object):
-    def __init__(self, maze_length):
+    def __init__(self, maze_length = 25):
         """Setup initial maze environment of maze_length length
             Initialize a tuple with the reward, first state, boolean
             indicating if it's terminal.
@@ -50,14 +50,13 @@ class MazeEnvironment(object):
             self.curr_point = (new_x,  new_y)
             if self.curr_point not in self.maze:
                 self.maze.append(self.curr_point)
-                self.maze_coords = np.append(self.maze_coords, np.array(
-                    self.curr_point).reshape((1,2)), axis = 0)
 
                 i += 1
                 if i >= maze_length:
                     self.goal_loc = self.curr_point
                     self.maze_complete = True
 
+            self.maze_coords = np.array(self.maze)
 
     def env_start(self):
         """The first method called when the episode starts, called before the

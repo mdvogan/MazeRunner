@@ -22,6 +22,8 @@ class BaseAgent(object):
         # is simply the number of states, in this case points in the maze
         self.values = np.zeros((self.policy.shape[0],))
 
+        self.agent_name = ""
+
     def argmax(self, values):
         """argmax with random tie-breaking
         Args:
@@ -83,7 +85,7 @@ class BaseAgent(object):
             ax.scatter(env.start_loc[0], env.start_loc[1], c = "G", s = 150, marker = 'o', label = "Start")
             ax.scatter(env.goal_loc[0], env.goal_loc[1], c = "R", s = 150, marker = 's', label = "End")
             ax.scatter(path[:, 0], path[:,1], c = "Y", label = "Optimal Policy")
-            ax.set_title("Optimal MazeRunner Policy")
+            ax.set_title("{} Optimal MazeRunner Policy".format(self.agent_name))
             ax.legend()
             plt.show()
 
@@ -91,6 +93,10 @@ class BaseAgent(object):
         return path
 
 class DPAgent(BaseAgent):
+
+    def __init__(self, *args, **kwargs):
+        super(DPAgent, self).__init__(*args, **kwargs)
+        self.agent_name = "DP Agent"
 
     def learn_policy(self, env, theta):
         """Solves for optimal policy using dynamic programming value iteration
@@ -134,6 +140,10 @@ class DPAgent(BaseAgent):
         return self.policy
 
 class MCAgent(BaseAgent):
+
+    def __init__(self, *args, **kwargs):
+        super(MCAgent, self).__init__(*args, **kwargs)
+        self.agent_name = "MC Agent"
 
     def learn_policy(self, env, n_episodes = 1000, offpolicy = False):
         """Solves for optimal policy using Monte Carlo simulation
@@ -192,6 +202,10 @@ class MCAgent(BaseAgent):
 
 class SARSAAgent(BaseAgent):
 
+    def __init__(self, *args, **kwargs):
+        super(SARSAAgent, self).__init__(*args, **kwargs)
+        self.agent_name = "SARSA Agent"
+
     def learn_policy(self, env, expected = False, n_episodes = 1000):
         """Solves for optimal policy using SARSA control algorithm
         Args: MazeEnvironment object, number of episodes, on/off policy
@@ -239,6 +253,10 @@ class SARSAAgent(BaseAgent):
         return self.policy
 
 class QAgent(BaseAgent):
+
+    def __init__(self, *args, **kwargs):
+        super(QAgent, self).__init__(*args, **kwargs)
+        self.agent_name = "Q Agent"
 
     def learn_policy(self, env, n_episodes = 1000):
         """Solves for optimal policy using q-learning control algorithm
